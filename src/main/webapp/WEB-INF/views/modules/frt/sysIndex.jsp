@@ -12,6 +12,26 @@
 	<script type="text/javascript">
 		var ctx = "${ctx}";
 		var ctxStatic = "${ctxStatic}";
+		function personInf() {
+			var option = {
+				title : "个人信息",
+				area : ['800px', '450px'],
+				url : ctx + "/sys/user/frt/info"
+			};
+
+			layerOpen(option);
+
+		}
+
+		function modifyPwd() {
+			var option = {
+				title : "修改密码",
+				area : ['800px', '400px'],
+				url : ctx + "/sys/user/frt/modifyPwd"
+			};
+			layerOpen(option);
+		}
+
 	</script>
 </head>
 <body>
@@ -63,7 +83,7 @@
   </div>
 </div>
 <script src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
-<script src="${pageContext.request.contextPath}/static/common/ynjf.js?v2"></script>
+<script src="${pageContext.request.contextPath}/static/common/ynjf.js?v5"></script>
 <script>
 //JavaScript代码区域
 layui.use('element', function(){

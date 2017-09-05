@@ -18,7 +18,7 @@
 	<link href="${ctxStatic}/jquery-select2/4.0.3/css/select2.min.css" rel="stylesheet">
 	<link href="${ctxStatic}/jquery-select2/4.0.3/css/select2-bootstrap.min.css" rel="stylesheet">
 	<link href="${ctxStatic}/layui/css/layui.css" rel="stylesheet">
-	<link href="${ctxStatic}/common/ynjf.css" rel="stylesheet">
+	<link href="${ctxStatic}/common/ynjf.css?v5" rel="stylesheet">
 	<!-- JS -->
 	<script src="${ctxStatic}/jquery/jquery-2.2.4.min.js" type="text/javascript"></script>
 	<script src="${ctxStatic}/json2/json2.js" type="text/javascript"></script>
@@ -30,7 +30,7 @@
 	<script src="${ctxStatic}/layui/layui.js"></script>
 	<script src="${ctxStatic}/jquery-select2/4.0.3/js/select2.full.min.js"></script>
 	<script src="${ctxStatic}/jquery-select2/4.0.3/js/zh-CN.js"></script>
-	<script src="${ctxStatic}/common/ynjf.js"></script>
+	<script src="${ctxStatic}/common/ynjf.js?v2"></script>
 	<!--[if lt IE 9]>
 	<script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
 	<script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>

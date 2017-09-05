@@ -22,12 +22,21 @@
     background-color: #eee;
 }
 
-/* body {
+body {
 	overflow-x: hidden;
-} */
+}
 
 .mstin {
 	color: red;
+}
+
+.txt-right {
+	text-align: right;
+}
+.border-bottom {
+	padding-bottom : 8px;
+	margin-bottom : 8px;
+	border-bottom : 1px dotted #dddddd;
 }
 
 .bottomBtn {

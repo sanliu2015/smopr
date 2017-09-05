@@ -5,22 +5,9 @@ layui.use('layer', function(){
 	var layer = layui.layer;
 });    
 
-function personInf() {
-	var option = {
-		title : "个人信息",
-		url : ctx + "/sys/user/frt/info"
-	};
-
-	layerOpen(option);
-
-}
-
-function modifyPwd() {
-	var option = {
-		title : "修改密码",
-		url : ctx + "/sys/user/frt/modifyPwd"
-	};
-	layerOpen(option);
+function closeCurrentLayer() {
+	var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+	parent.layer.close(index); //再执行关闭   
 }
 
 function layerOpen(opt) {
