@@ -143,7 +143,7 @@
 		FROM sys_user a
 		<include refid="userJoins"/><!-- 
 		LEFT JOIN sys_role_office ro ON ro.role_id = r.id -->
-		WHERE a.login_name = #{loginName} AND a.del_flag = #{DEL_FLAG_NORMAL} and a.org_code is null 
+		WHERE a.login_name = #{loginName} AND a.del_flag = #{DEL_FLAG_NORMAL} 
 	</select>
 	
 	<!-- 分页查询用户信息 -->
@@ -155,7 +155,7 @@
 		<if test="role != null and role.id != null and role.id != ''">
 			JOIN sys_user_role ur ON ur.user_id = a.id AND ur.role_id = #{role.id}
 		</if>
-		WHERE a.del_flag = #{DEL_FLAG_NORMAL} and a.org_code is null 
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} 
 		<if test="company != null and company.id != null and company.id != ''">
 			AND (c.id = #{company.id} OR c.parent_ids LIKE 
 					<if test="dbName == 'oracle'">'%,'||#{company.id}||',%')</if>
@@ -201,7 +201,7 @@
 		SELECT
 			a.id, a.name, a.login_name
 		FROM sys_user a
-		WHERE a.del_flag = #{DEL_FLAG_NORMAL} and a.org_code is null  
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}  
 			AND a.office_id = #{office.id}
 		ORDER BY a.name
 	</select>
@@ -212,7 +212,7 @@
 			<include refid="userColumns"/>
 		FROM sys_user a
 		<include refid="userJoins"/>
-		WHERE a.del_flag = #{DEL_FLAG_NORMAL} and a.org_code is null 
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} 
 		ORDER BY c.code, o.code, a.name
 	</select>
 	
@@ -221,7 +221,7 @@
 		SELECT
 			COUNT(1)
 		FROM sys_user a
-		WHERE a.del_flag = #{DEL_FLAG_NORMAL} and a.org_code is null 
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} 
 	</select>
 	
 	<!-- 插入用户 -->

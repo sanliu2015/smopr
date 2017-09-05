@@ -90,12 +90,13 @@ $(function () {
             	return false;
             } else {
             	$.ajax({
-//            		url: ctx + "/register/getMobileCheckCode",
+            		url: ctx + "/register/getMobileCheckCode",
 					type: "post",
 					cache: false,
 					dataType: "json",
 					data:{"mobile":$("#contactMobile").val()},
 			        success:function(resp){  
+			        	debugger;
 			            if(resp.sucFlag == "1"){  
 			            	layer.msg('验证码已发送，请注意查收');
 			            	// 计时开始
@@ -128,36 +129,65 @@ $(function () {
     /*表格隔行变色*/
     $('table tr:nth-child(odd) td').css('background','#f7f7f7');
     
-    /*审核不通过原因*/
-    $('.nopass').on('click',function(){
-    	$(this).parent().next('.reason').find("textarea").val("");
-        if($(this).parent('.yui-checkbox').hasClass('yui-checked')){
-            $(this).parent().next('.reason').addClass('hide'); 
-        }else{
-            $(this).parent().next('.reason').removeClass('hide'); 
-        }
-    });
+    /*添加管理员*/
+    $('.addManager').on('click',function(){
+        layer.open({
+          title:'添加管理员信息',
+          type: 1,
+          skin: 'layui-layer-rim', //加上边框
+          area: ['800px', '220px'], //宽高
+          content: $(".addManagePop"),
+          btn: ['添加', '取消'],
+          yes:function(index){
+              layer.close(index);
+              layer.msg('添加成功', {icon: 1});
+            }
+        });
+    })
     
-    $('.iconfont').on('click',function(){
-    	$(this).parent().parent().next('.reason').find("textarea").val("");
-        if($(this).parent().parent('.yui-checkbox').hasClass('yui-checked')){
-            $(this).parent().parent().next('.reason').addClass('hide'); 
+    /*审核不通过原因*/
+    $('.nopass1').on('click',function(){
+        if($(this).parent('.yui-checkbox').hasClass('yui-checked')){
+            
         }else{
-            $(this).parent().parent().next('.reason').removeClass('hide'); 
+            layer.tips('请写下理由不通过', '.nopass1', {
+              tips: [3, '#f7f7f7'],
+              time: 4000
+            });
         }
-    });
-//    /*点击下载*/
-//    $('.downLoad').on('click',function(){
-//        var dataUrl = $(this).parent().prev('img').attr('src');
-//        var newImg = document.createElement("img");
-//	    newImg.src =  dataUrl;
-//        download(newImg.src);
-//    })
-//    
-//    function download(src) {
-//        var $a = $("<a></a>").attr("href", src).attr("download", "img.png");
-//        $a[0].click();
-//    }
+    })
+    $('.nopass2').on('click',function(){
+        if($(this).parent('.yui-checkbox').hasClass('yui-checked')){
+            
+        }else{
+            layer.tips('请写下理由不通过', '.nopass2', {
+              tips: [3, '#f7f7f7'],
+              time: 4000
+            });
+        }
+    })
+    $('.nopass3').on('click',function(){
+        if($(this).parent('.yui-checkbox').hasClass('yui-checked')){
+            
+        }else{
+            layer.tips('请写下理由不通过', '.nopass3', {
+              tips: [3, '#f7f7f7'],
+              time: 4000
+            });
+        }
+    })
+    /*点击下载*/
+    $('.downLoad').on('click',function(){
+        var dataUrl = $(this).parent().prev('img').attr('src');
+        var newImg = document.createElement("img");
+	    newImg.src =  dataUrl;
+        download(newImg.src);
+    })
+    
+    function download(src) {
+        var $a = $("<a></a>").attr("href", src).attr("download", "img.png");
+        $a[0].click();
+    }
     
     /*导航*/
 /*    $('.navSlide').on('click','dt',function(){

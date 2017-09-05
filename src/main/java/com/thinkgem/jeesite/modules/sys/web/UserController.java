@@ -3,6 +3,7 @@
  */
 package com.thinkgem.jeesite.modules.sys.web;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -291,6 +292,49 @@ public class UserController extends BaseController {
 		model.addAttribute("user", currentUser);
 		model.addAttribute("Global", new Global());
 		return "modules/sys/userInfo";
+	}
+	
+	/**
+	 * 前台用户个人信息
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequiresPermissions("user")
+	@RequestMapping(value = "/frt/info")
+	public String personInf(HttpServletResponse response, Model model) {
+		User currentUser = UserUtils.getUser();
+		model.addAttribute("user", currentUser);
+		return "modules/frt/userInfo";
+	}
+	
+	/**
+	 * 前台用户修改面
+	 * @param oldPassword
+	 * @param newPassword
+	 * @param model
+	 * @return
+	 */
+	@RequiresPermissions("user")
+	@RequestMapping(value = "/frt/modifyPwd")
+	public String modifyPassword() {
+		return "modules/frt/userModifyPwd";
+	}
+	
+	@RequiresPermissions("user")
+	@RequestMapping(value = "/frt/modifyPwdSubmit", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> modifyPasswordSubmit(String oldPassword, String newPassword) {
+		User user = UserUtils.getUser();
+		Map<String, Object> respMap = new HashMap<String, Object>();
+		if (SystemService.validatePassword(oldPassword, user.getPassword())){
+			systemService.updatePasswordById(user.getId(), user.getLoginName(), newPassword);
+			respMap.put("code", "1");
+		}else{
+			respMap.put("code", "0");
+			respMap.put("msg", "修改密码失败，旧密码错误");
+		}
+		return respMap;
 	}
 
 	/**

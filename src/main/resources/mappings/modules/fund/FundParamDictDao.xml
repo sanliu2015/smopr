@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.fund.dao.FundParamDictDao">
+    
+	<sql id="fundParamDictColumns">
+		a.id AS "id",
+		a.dict_code AS "dictCode",
+		a.dict_name AS "dictName"
+	</sql>
+	
+	<sql id="fundParamDictJoins">
+	</sql>
+    
+	<select id="get" resultType="com.thinkgem.jeesite.modules.fund.entity.FundParamDict">
+		SELECT 
+			<include refid="fundParamDictColumns"/>
+		FROM fund_param_dict a
+		<include refid="fundParamDictJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="com.thinkgem.jeesite.modules.fund.entity.FundParamDict">
+		SELECT 
+			<include refid="fundParamDictColumns"/>
+		FROM fund_param_dict a
+		<include refid="fundParamDictJoins"/>
+		<where>
+			
+			<if test="dictCode != null and dictCode != ''">
+				AND a.dict_code LIKE 
+					<if test="dbName == 'oracle'">'%'||#{dictCode}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{dictCode}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{dictCode},'%')</if>
+			</if>
+			<if test="dictName != null and dictName != ''">
+				AND a.dict_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{dictName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{dictName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{dictName},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.dict_code 
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="com.thinkgem.jeesite.modules.fund.entity.FundParamDict">
+		SELECT 
+			<include refid="fundParamDictColumns"/>
+		FROM fund_param_dict a
+		<include refid="fundParamDictJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fund_param_dict(
+			id,
+			dict_code,
+			dict_name
+		) VALUES (
+			#{id},
+			#{dictCode},
+			#{dictName}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fund_param_dict SET 	
+			dict_code = #{dictCode},
+			dict_name = #{dictName}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fund_param_dict
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

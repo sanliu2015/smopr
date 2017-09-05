@@ -10,4 +10,7 @@
 	<decorator name="cms_default_basic" page="modules/cms/front/themes/basic/layouts/default.jsp" />
 	<decorator name="cms_default_weixin" page="modules/cms/front/themes/weixin/layouts/default.jsp" />
 	
+	<!-- 表单和list装饰页面 -->
+	<decorator name="form" page="layouts/form.jsp" />
+	<decorator name="list" page="layouts/list.jsp" />
 </decorators>

@@ -155,16 +155,16 @@ public class LoginController extends BaseController{
 		
 		attr.addAttribute("module", "1");
 		
-		// 如果是手机登录，则返回JSON字符串
-		if (principal.isMobileLogin()){
-			if (request.getParameter("login") != null){
-				return renderString(response, principal);
-			}
-			if (request.getParameter("index") != null){
-				return "redirect:" + adminPath + "/orgAuditLog/auditList";
-			}
-			return "redirect:" + adminPath + "/login";
-		}
+//		// 如果是手机登录，则返回JSON字符串
+//		if (principal.isMobileLogin()){
+//			if (request.getParameter("login") != null){
+//				return renderString(response, principal);
+//			}
+//			if (request.getParameter("index") != null){
+//				return "modules/sys/sysIndex";
+//			}
+//			return "redirect:" + adminPath + "/login";
+//		}
 		
 //		// 登录成功后，获取上次登录的当前站点ID
 //		UserUtils.putCache("siteId", StringUtils.toLong(CookieUtils.getCookie(request, "siteId")));
@@ -183,7 +183,11 @@ public class LoginController extends BaseController{
 ////			request.getSession().setAttribute("aaa", "aa");
 ////		}
 //		System.out.println("==========================b");
-		return "redirect:" + adminPath + "/orgAuditLog/auditList";
+		
+		if (UserUtils.getUser().getUserType() != null && UserUtils.getUser().getUserType().toLowerCase().startsWith("f")) {
+			return "modules/frt/sysIndex";
+		}
+		return "modules/sys/sysIndex";
 	}
 	
 	/**
