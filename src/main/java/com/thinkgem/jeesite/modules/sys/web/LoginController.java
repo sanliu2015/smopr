@@ -28,6 +28,7 @@ import com.thinkgem.jeesite.common.utils.CookieUtils;
 import com.thinkgem.jeesite.common.utils.IdGen;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.modules.frt.service.FrontService;
 import com.thinkgem.jeesite.modules.sys.security.FormAuthenticationFilter;
 import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm.Principal;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
@@ -42,6 +43,9 @@ public class LoginController extends BaseController{
 	
 	@Autowired
 	private SessionDAO sessionDAO;
+	
+	@Autowired
+	private FrontService frontService;
 	
 	/**
 	 * 管理登录
@@ -185,6 +189,8 @@ public class LoginController extends BaseController{
 //		System.out.println("==========================b");
 		
 		if (UserUtils.getUser().getUserType() != null && UserUtils.getUser().getUserType().toLowerCase().startsWith("f")) {
+			Map<String, Object> fundInfo = frontService.findFundInfo(UserUtils.getUser().getFundCode());
+			request.setAttribute("fundInfo", fundInfo);
 			return "modules/frt/sysIndex";
 		}
 		return "modules/sys/sysIndex";

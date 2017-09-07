@@ -54,7 +54,7 @@ public class User extends DataEntity<User> {
 	
 	private List<Role> roleList = Lists.newArrayList(); // 拥有角色列表
 	
-	private String orgCode;
+	private String fundCode;
 
 	public User() {
 		super();
@@ -324,12 +324,13 @@ public class User extends DataEntity<User> {
 		return id;
 	}
 
-	public String getOrgCode() {
-		return orgCode;
+	public String getFundCode() {
+		return fundCode;
 	}
 
-	public void setOrgCode(String orgCode) {
-		this.orgCode = orgCode;
+	public void setFundCode(String fundCode) {
+		this.fundCode = fundCode;
 	}
+
 	
 }

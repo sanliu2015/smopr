@@ -80,7 +80,7 @@
 		a.update_by AS "updateBy.id",
 		a.update_date,
 		a.del_flag,
-		a.org_code,
+		a.fund_code,
     	c.name AS "company.name",
     	c.parent_id AS "company.parent.id",
     	c.parent_ids AS "company.parentIds",
@@ -245,7 +245,7 @@
 			remarks, 
 			login_flag, 
 			photo,
-			org_code, 
+			fund_code, 
 			del_flag
 		) VALUES (
 			#{id}, 
@@ -354,7 +354,7 @@
 			a.login_flag as "loginFlag",
 			a.del_flag as "delFlag"
 			from sys_user a 
-		where a.org_code is null  
+		where 1=1 
 		order by a.create_date desc 
 	</select>
 	
