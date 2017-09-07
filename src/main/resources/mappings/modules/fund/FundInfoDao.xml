@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.fund.dao.FundInfoDao">
+    
+	<sql id="fundInfoColumns">
+		a.id AS "id",
+		a.fund_code AS "fundCode",
+		a.fund_name AS "fundName",
+		a.fund_handler AS "fundHandler",
+		a.fund_trustee AS "fundTrustee",
+		a.fund_oper_mode AS "fundOperMode",
+		a.fund_type AS "fundType",
+		a.inve_scope AS "inveScope",
+		a.is_fof AS "isFof",
+		a.inve_form AS "inveForm",
+		a.fund_sdate AS "fundSdate",
+		a.duration AS "duration",
+		a.perf_benc AS "perfBenc",
+		a.is_classify AS "isClassify",
+		a.repay_type AS "repayType",
+		a.repay_perf_benc AS "repayPerfBenc",
+		a.repay_pro AS "repayPro",
+		a.fund_advisor AS "fundAdvisor",
+		a.net_value_cycle AS "netValueCycle",
+		a.is_clear AS "isClear",
+		a.fund_clear_date AS "fundClearDate",
+		a.sdate AS "sdate",
+		a.edate AS "edate",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.data_source AS "dataSource"
+	</sql>
+	
+	<sql id="fundInfoJoins">
+	</sql>
+    
+	<select id="get" resultType="FundInfo">
+		SELECT 
+			<include refid="fundInfoColumns"/>
+		FROM fund_info a
+		<include refid="fundInfoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FundInfo">
+		SELECT 
+			<include refid="fundInfoColumns"/>
+		FROM fund_info a
+		<include refid="fundInfoJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FundInfo">
+		SELECT 
+			<include refid="fundInfoColumns"/>
+		FROM fund_info a
+		<include refid="fundInfoJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fund_info(
+			id,
+			fund_code,
+			fund_name,
+			fund_handler,
+			fund_trustee,
+			fund_oper_mode,
+			fund_type,
+			inve_scope,
+			is_fof,
+			inve_form,
+			fund_sdate,
+			duration,
+			perf_benc,
+			is_classify,
+			repay_type,
+			repay_perf_benc,
+			repay_pro,
+			fund_advisor,
+			net_value_cycle,
+			is_clear,
+			fund_clear_date,
+			sdate,
+			edate,
+			create_by,
+			create_date,
+			data_source
+		) VALUES (
+			#{id},
+			#{fundCode},
+			#{fundName},
+			#{fundHandler},
+			#{fundTrustee},
+			#{fundOperMode},
+			#{fundType},
+			#{inveScope},
+			#{isFof},
+			#{inveForm},
+			#{fundSdate},
+			#{duration},
+			#{perfBenc},
+			#{isClassify},
+			#{repayType},
+			#{repayPerfBenc},
+			#{repayPro},
+			#{fundAdvisor},
+			#{netValueCycle},
+			#{isClear},
+			#{fundClearDate},
+			#{sdate},
+			#{edate},
+			#{createBy.id},
+			#{createDate},
+			#{dataSource}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fund_info SET 	
+			fund_code = #{fundCode},
+			fund_name = #{fundName},
+			fund_handler = #{fundHandler},
+			fund_trustee = #{fundTrustee},
+			fund_oper_mode = #{fundOperMode},
+			fund_type = #{fundType},
+			inve_scope = #{inveScope},
+			is_fof = #{isFof},
+			inve_form = #{inveForm},
+			fund_sdate = #{fundSdate},
+			duration = #{duration},
+			perf_benc = #{perfBenc},
+			is_classify = #{isClassify},
+			repay_type = #{repayType},
+			repay_perf_benc = #{repayPerfBenc},
+			repay_pro = #{repayPro},
+			fund_advisor = #{fundAdvisor},
+			net_value_cycle = #{netValueCycle},
+			is_clear = #{isClear},
+			fund_clear_date = #{fundClearDate},
+			sdate = #{sdate},
+			edate = #{edate},
+			data_source = #{dataSource}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fund_info
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

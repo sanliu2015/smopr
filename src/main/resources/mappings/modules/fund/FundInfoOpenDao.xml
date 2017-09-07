@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.fund.dao.FundInfoOpenDao">
+    
+	<sql id="fundInfoOpenColumns">
+		a.id AS "id",
+		a.fund_code AS "fundCode",
+		a.notice_title AS "noticeTitle",
+		a.notice_content AS "noticeContent",
+		a.is_file AS "isFile",
+		a.notice_date AS "noticeDate",
+		a.notice_time AS "noticeTime",
+		a.notice_type AS "noticeType",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="fundInfoOpenJoins">
+	</sql>
+    
+	<select id="get" resultType="FundInfoOpen">
+		SELECT 
+			<include refid="fundInfoOpenColumns"/>
+		FROM fund_info_open a
+		<include refid="fundInfoOpenJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FundInfoOpen">
+		SELECT 
+			<include refid="fundInfoOpenColumns"/>
+		FROM fund_info_open a
+		<include refid="fundInfoOpenJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="fundCode != null and fundCode != ''">
+				AND a.fund_code LIKE 
+					<if test="dbName == 'oracle'">'%'||#{fundCode}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{fundCode}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{fundCode},'%')</if>
+			</if>
+			<if test="noticeTitle != null and noticeTitle != ''">
+				AND a.notice_title LIKE 
+					<if test="dbName == 'oracle'">'%'||#{noticeTitle}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{noticeTitle}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{noticeTitle},'%')</if>
+			</if>
+			<if test="noticeType != null and noticeType != ''">
+				AND a.notice_type = #{noticeType}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FundInfoOpen">
+		SELECT 
+			<include refid="fundInfoOpenColumns"/>
+		FROM fund_info_open a
+		<include refid="fundInfoOpenJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fund_info_open(
+			id,
+			fund_code,
+			notice_title,
+			notice_content,
+			is_file,
+			notice_date,
+			notice_time,
+			notice_type,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{fundCode},
+			#{noticeTitle},
+			#{noticeContent},
+			#{isFile},
+			#{noticeDate},
+			#{noticeTime},
+			#{noticeType},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fund_info_open SET 	
+			fund_code = #{fundCode},
+			notice_title = #{noticeTitle},
+			notice_content = #{noticeContent},
+			is_file = #{isFile},
+			notice_date = #{noticeDate},
+			notice_time = #{noticeTime},
+			notice_type = #{noticeType},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE fund_info_open SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.frt.dao.FrontDao">
+    
+	<select id="findFundInfo" resultType="java.util.Map">
+		select a.fund_code as "fundCode",
+			a.fund_name as "fundName",
+			to_char(a.fund_sdate,'yyyy-MM-dd') as "foundDate",
+			b.organ_name as "registerName",
+			c.organ_name as "handlerName",
+			d.organ_name as "trusteeName",
+			e.name as "fundType",
+			f.name as "operMode",
+			g.manager_name as "managerName" 
+		from fund_info a 
+			left join fund_organ_info b on a.fund_register=b.organ_code and b.edate=date'2199-12-31'
+			left join fund_organ_info c on a.fund_handler=c.organ_code and c.edate=date'2199-12-31'
+			left join fund_organ_info d on a.fund_trustee=d.organ_code and d.edate=date'2199-12-31'
+			left join fund_param_code e on e.dict_code='fundType' and a.fund_type=e.code 
+			left join fund_param_code f on f.dict_code='fundType' and a.fund_oper_mode=f.code 
+			left join fund_manager_map h on a.fund_code=h.fund_code 
+			left join fund_manager_info g on h.fund_manager_id=g.id 
+		where a.fund_code=#{fundCode} and a.edate=date'2199-12-31' 	
+	</select>
+	
+	<select id="queryNetValue" resultType="java.util.Map">
+		select 
+			to_char(a.data_date,'yyyy-MM-dd') as "dataDate",
+			round(a.fund_nuv + 0.00005, 4) as "netValue",
+			round(a.fund_sum_nuv + 0.00005, 4) as "sumValue"
+		from fund_net_value a 
+		where a.fund_code=#{fundCode} 
+		<if test="dataDates != null and dataDates != ''">
+			AND a.data_date &gt;= TO_DATE(#{dataDates},'yyyy-MM-dd')
+		</if>
+		<if test="dataDatee != null and dataDatee != ''">
+			AND a.data_date &lt;= TO_DATE(#{dataDatee},'yyyy-MM-dd')
+		</if>
+		
+		
+		ORDER BY a.data_date desc
+	</select> 
+	
+</mapper>

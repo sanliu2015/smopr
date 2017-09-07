@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.fund.dao.FundOrganInfoDao">
+    
+	<sql id="fundOrganInfoColumns">
+		a.id AS "id",
+		a.organ_code AS "organCode",
+		a.organ_name AS "organName",
+		a.organ_type AS "organType",
+		a.disc_name AS "discName",
+		a.disc_tel AS "discTel",
+		a.disc_email AS "discEmail",
+		a.fax AS "fax",
+		a.register_addr AS "registerAddr",
+		a.office_addr AS "officeAddr",
+		a.post_code AS "postCode",
+		a.legal_representative AS "legalRepresentative",
+		a.organ_report AS "organReport",
+		a.situation_description AS "situationDescription",
+		a.commitment AS "commitment",
+		a.fin_confirm AS "finConfirm",
+		a.sdate AS "sdate",
+		a.edate AS "edate",
+		a.data_source AS "dataSource",
+		a.is_del AS "isDel",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate"
+	</sql>
+	
+	<sql id="fundOrganInfoJoins">
+	</sql>
+    
+	<select id="get" resultType="FundOrganInfo">
+		SELECT 
+			<include refid="fundOrganInfoColumns"/>
+		FROM fund_organ_info a
+		<include refid="fundOrganInfoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FundOrganInfo">
+		SELECT 
+			<include refid="fundOrganInfoColumns"/>
+		FROM fund_organ_info a
+		<include refid="fundOrganInfoJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FundOrganInfo">
+		SELECT 
+			<include refid="fundOrganInfoColumns"/>
+		FROM fund_organ_info a
+		<include refid="fundOrganInfoJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fund_organ_info(
+			id,
+			organ_code,
+			organ_name,
+			organ_type,
+			disc_name,
+			disc_tel,
+			disc_email,
+			fax,
+			register_addr,
+			office_addr,
+			post_code,
+			legal_representative,
+			organ_report,
+			situation_description,
+			commitment,
+			fin_confirm,
+			sdate,
+			edate,
+			data_source,
+			is_del,
+			create_by,
+			create_date
+		) VALUES (
+			#{id},
+			#{organCode},
+			#{organName},
+			#{organType},
+			#{discName},
+			#{discTel},
+			#{discEmail},
+			#{fax},
+			#{registerAddr},
+			#{officeAddr},
+			#{postCode},
+			#{legalRepresentative},
+			#{organReport},
+			#{situationDescription},
+			#{commitment},
+			#{finConfirm},
+			#{sdate},
+			#{edate},
+			#{dataSource},
+			#{isDel},
+			#{createBy.id},
+			#{createDate}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fund_organ_info SET 	
+			organ_code = #{organCode},
+			organ_name = #{organName},
+			organ_type = #{organType},
+			disc_name = #{discName},
+			disc_tel = #{discTel},
+			disc_email = #{discEmail},
+			fax = #{fax},
+			register_addr = #{registerAddr},
+			office_addr = #{officeAddr},
+			post_code = #{postCode},
+			legal_representative = #{legalRepresentative},
+			organ_report = #{organReport},
+			situation_description = #{situationDescription},
+			commitment = #{commitment},
+			fin_confirm = #{finConfirm},
+			sdate = #{sdate},
+			edate = #{edate},
+			data_source = #{dataSource},
+			is_del = #{isDel}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fund_organ_info
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
