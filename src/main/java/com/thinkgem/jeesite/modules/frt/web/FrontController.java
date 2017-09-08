@@ -15,6 +15,8 @@ import com.thinkgem.jeesite.common.mapper.JsonMapper;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.frt.service.FrontService;
+import com.thinkgem.jeesite.modules.fund.entity.FundInfoOpen;
+import com.thinkgem.jeesite.modules.fund.service.FundInfoOpenService;
 import com.thinkgem.jeesite.modules.sys.utils.QueryMap;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
@@ -24,6 +26,9 @@ public class FrontController extends BaseController {
 
 	@Autowired
 	private FrontService frontService;
+	
+	@Autowired
+	private FundInfoOpenService fundInfoOpenService;
 	
 	@RequestMapping(value = {"/netInfo/list"})
 	@ResponseBody
@@ -45,6 +50,14 @@ public class FrontController extends BaseController {
 		return JsonMapper.toJsonString(pageData);
 	}
 	
+	@RequestMapping(value = {"/fundInfoOpen/view"})
+	public String viewNotice(@RequestParam(required = false)String id, HttpServletRequest request, HttpServletResponse response) {
+		FundInfoOpen notice = fundInfoOpenService.get(id);
+		if (notice != null && notice.getFundCode().equals(UserUtils.getUser().getFundCode())) {
+			request.setAttribute("notice", notice);
+		}
+		return "modules/frt/viewNotice";
+	}
 	
 	
 }
