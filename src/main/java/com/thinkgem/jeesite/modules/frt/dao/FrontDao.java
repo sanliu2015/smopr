@@ -14,4 +14,6 @@ public interface FrontDao extends BaseDao {
 
 	Map<String, Object> findFundInfo(String fundCode);
 
+	List<Map<String, Object>> queryFundInfoOpen(QueryMap queryMap);
+
 }

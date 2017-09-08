@@ -19,8 +19,7 @@ public class FundInfoOpen extends DataEntity<FundInfoOpen> {
 	private String noticeTitle;		// 公告标题
 	private String noticeContent;		// 公告内容（如果是文件，怎代表相对地址）
 	private String isFile;		// 是否纯文件标识（0代表否，1代表是）
-	private String noticeDate;		// 公告日期
-	private String noticeTime;		// 公告时间
+	private String filePath;	// 文件路径
 	private String noticeType;		// 公告类型
 	
 	public FundInfoOpen() {
@@ -66,24 +65,14 @@ public class FundInfoOpen extends DataEntity<FundInfoOpen> {
 		this.isFile = isFile;
 	}
 	
-	@Length(min=0, max=10, message="公告日期长度必须介于 0 和 10 之间")
-	public String getNoticeDate() {
-		return noticeDate;
+	public String getFilePath() {
+		return filePath;
 	}
 
-	public void setNoticeDate(String noticeDate) {
-		this.noticeDate = noticeDate;
-	}
-	
-	@Length(min=0, max=10, message="公告时间长度必须介于 0 和 10 之间")
-	public String getNoticeTime() {
-		return noticeTime;
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 
-	public void setNoticeTime(String noticeTime) {
-		this.noticeTime = noticeTime;
-	}
-	
 	@Length(min=0, max=10, message="公告类型长度必须介于 0 和 10 之间")
 	public String getNoticeType() {
 		return noticeType;

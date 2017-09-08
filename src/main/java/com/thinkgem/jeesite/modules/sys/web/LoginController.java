@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.config.Global;
+import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.security.shiro.session.SessionDAO;
 import com.thinkgem.jeesite.common.servlet.ValidateCodeServlet;
 import com.thinkgem.jeesite.common.utils.CacheUtils;
@@ -31,6 +32,7 @@ import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.frt.service.FrontService;
 import com.thinkgem.jeesite.modules.sys.security.FormAuthenticationFilter;
 import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm.Principal;
+import com.thinkgem.jeesite.modules.sys.utils.QueryMap;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
@@ -189,8 +191,13 @@ public class LoginController extends BaseController{
 //		System.out.println("==========================b");
 		
 		if (UserUtils.getUser().getUserType() != null && UserUtils.getUser().getUserType().toLowerCase().startsWith("f")) {
+			// 前台用户初始化
 			Map<String, Object> fundInfo = frontService.findFundInfo(UserUtils.getUser().getFundCode());
 			request.setAttribute("fundInfo", fundInfo);
+			QueryMap queryMap = new QueryMap();
+			queryMap.put("fundCode", UserUtils.getUser().getFundCode());
+			Map<String, Object> noticeMap = frontService.queryFundInfoOpen(new Page<Map<String, Object>>(1, 10), queryMap);	// 公告10页
+			request.setAttribute("noticeMap", noticeMap);
 			return "modules/frt/sysIndex";
 		}
 		return "modules/sys/sysIndex";

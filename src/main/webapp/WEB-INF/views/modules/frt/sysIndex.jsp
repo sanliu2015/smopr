@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
+<%@ taglib prefix="fnyn" uri="/WEB-INF/tlds/fnyn.tld" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +10,14 @@
 	<link rel="stylesheet" href="${ctxStatic}/layui/css/layui.css" />
 	<link rel="stylesheet" href="${ctxStatic}/common/ynjf.css" />
 	<script type="text/javascript" src="${ctxStatic}/jquery/jquery-2.2.4.min.js"></script>
+	<script type="text/javascript" src="${ctxStatic}/json2/json2.js"></script>
+	<style type="text/css">
+	.searchDiv dl {float:left;line-height:24px;}
+	.searchDiv dt {float:left;width:100px;color:#333;}
+	.searchDiv dd {float:left;width:600px;}
+	.searchDiv dd li {float:left;margin-right:16px;display:inline;padding:0 5px;cursor:pointer;}
+	.searchDiv .active {background-color:#f1820e;color:#fff;}
+	</style>
 	<script type="text/javascript">
 		var ctx = "${ctx}";
 		var ctxStatic = "${ctxStatic}";
@@ -30,8 +39,6 @@
 			};
 			layerOpen(option);
 		}
-		
-
 	</script>
 </head>
 <body>
@@ -124,7 +131,43 @@
 				</div>
 		    	<table id="layuiDataGrid"></table>
 		    </div>
-		    <div class="layui-tab-item">内容5</div>
+		    <div class="layui-tab-item">
+		    	<blockquote class="layui-elem-quote layui-quote-nm">
+		    	<div class="searchDiv">
+				  <dl>
+					<dt>公告类型：</dt>
+					<dd>
+						<ul id="noticeType">
+							<li value="" class="active">不限</li>
+							<c:forEach items="${fnyn:getDictListByOrder('noticeType','0')}"  var="obj" varStatus="idx">
+								<li value="${obj.code}">${obj.name}</li>
+							</c:forEach>
+						</ul>
+					</dd>
+				  </dl>
+				</div>
+				<br>
+				</blockquote>
+		    
+		    	<table class="layui-table" lay-skin="nob" id="noticeTable">
+		    		 <colgroup>
+					    <col >
+					    <col width="130px;">
+					  </colgroup>
+					<tbody>
+						<c:if test="${noticeMap.count == 0}">暂无相关数据，谢谢！</c:if>
+						<c:if test="${noticeMap.count != 0}">
+							<c:forEach items="${noticeMap.data}" var="obj">
+							<tr>
+								<td><a href="${ctxRoot}${obj.linkUrl}" target="_blank">${obj.noticeTitle}</a></td>
+								<td>${obj.noticeDate}</td>
+							</tr>
+							</c:forEach>
+						</c:if>
+					</tbody>
+				</table>
+				<div id="noticePage" style="text-align:center"></div>		
+		    </div>
 		  </div>
 		</div> 
 	</div>
@@ -149,7 +192,40 @@ layui.use(['element','table','laypage','laydate'], function(){
   });
   laydate.render({
 	    elem: '#dataDatee' //指定元素
-});
+  });
+  laypage.render({
+	    elem: 'noticePage' // 不能加#
+	    ,count: ${noticeMap.count}
+	    ,jump: function(obj, first){
+	        //obj包含了当前分页的所有参数，比如：
+	        //console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+	        //console.log(obj.limit); //得到每页显示的条数
+	        //首次不执行
+	        if(!first){
+	        	// 异步加载
+	        	$.ajax({
+	        		url : '${ctx}/frt/fundInfoOpen/list',
+	        		data : {pageSize:obj.limit, pageNo:obj.curr, noticeType: $("#noticeType").find(".active").attr("value")},
+	        		dataType : "json",
+	        		success:function(resp){  
+			            if(resp.code == "0"){  	// 请求成功
+			            	$("#noticeTable").find("tbody").html("");
+			            	var trHtml = "";
+			            	$.each(resp.data,function(i,row){
+			            		trHtml = trHtml + "<tr><td><a href='${ctxRoot}" + row.linkUrl + "' target='_blank'>" + row.noticeTitle + "</a></td><td>" + row.noticeDate + "</td></tr>";
+			            	});
+			            	$("#noticeTable").find("tbody").html(trHtml);
+			            }else{  
+			                layer.alert(resp.msg, {icon: 0});  
+			            }  
+			        },  
+			        error:function(data) {
+						layer.alert(data.responseText, {icon: 5, area: '500px'});  
+					}
+	        	});
+	        }
+	    }
+  });
   var tableIns = table.render({
 	  elem: '#layuiDataGrid' //指定原始表格元素选择器（推荐id选择器）
 		  ,skin: 'line' //行边框风格
@@ -197,6 +273,74 @@ layui.use(['element','table','laypage','laydate'], function(){
 			 } 
   		});
 	});
+  	
+  	$("#noticeType").find("li").bind("click", function(){
+		$("#noticeType").find("li").removeClass("active");
+		$(this).addClass("active");
+		
+		$.ajax({
+    		url : '${ctx}/frt/fundInfoOpen/list',
+    		data : {pageSize:10, pageNo:1, noticeType: $(this).attr("value")},
+    		dataType : "json",
+    		success:function(resp){  
+	            if(resp.code == "0"){  	// 请求成功
+	            	$("#noticeTable").find("tbody").html("");
+	            	if (resp.count > 0) {
+	            		var trHtml = "";
+		            	$.each(resp.data,function(i,row){
+		            		trHtml = trHtml + "<tr><td><a href='${ctxRoot}" + row.linkUrl + "' target='_blank'>" + row.noticeTitle + "</a></td><td>" + row.noticeDate + "</td></tr>";
+		            	});
+		            	$("#noticeTable").find("tbody").html(trHtml);
+	            	} else {
+	            		$("#noticeTable").find("tbody").html("暂无相关数据，谢谢！");
+	            	}
+	            	
+	            	laypage.render({
+	        		    elem: 'noticePage' // 不能加#
+	        		    ,count: resp.count
+	        		    ,jump: function(obj, first){
+	        		        //obj包含了当前分页的所有参数，比如：
+	        		        //console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+	        		        //console.log(obj.limit); //得到每页显示的条数
+	        		        //首次不执行
+	        		        if(!first){
+	        		        	$.ajax({
+	        		        		url : '${ctx}/frt/fundInfoOpen/list',
+	        		        		data : {pageSize:obj.limit, pageNo:obj.curr, noticeType: $("#noticeType").find(".active").attr("value")},
+	        		        		dataType : "json",
+	        		        		success:function(resp){  
+	        				            if(resp.code == "0"){  	// 请求成功
+	        				            	$("#noticeTable").find("tbody").html("");
+	        				            	var trHtml = "";
+	        				            	$.each(resp.data,function(i,row){
+	        				            		trHtml = trHtml + "<tr><td><a href='${ctxRoot}" + row.linkUrl + "' target='_blank'>" + row.noticeTitle + "</a></td><td>" + row.noticeDate + "</td></tr>";
+	        				            	});
+	        				            	$("#noticeTable").find("tbody").html(trHtml);
+	        				            }else{  
+	        				                layer.alert(resp.msg, {icon: 0});  
+	        				            }  
+	        				        },  
+	        				        error:function(data) {
+	        							layer.alert(data.responseText, {icon: 5, area: '500px'});  
+	        						}
+	        		        	});
+	        		        }
+	        		    }
+	        	  	});
+	            	
+	            	
+	            	
+	            }else{  
+	                layer.alert(resp.msg, {icon: 0});  
+	            }  
+	        },  
+	        error:function(data) {
+				layer.alert(data.responseText, {icon: 5, area: '500px'});  
+			}
+    	})
+		
+	});
+  	
 });
 
 </script>

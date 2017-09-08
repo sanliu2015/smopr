@@ -46,27 +46,15 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">公告内容（如果是文件，怎代表相对地址）：</label>
+			<label class="control-label">公告内容：</label>
 			<div class="controls">
 				<form:input path="noticeContent" htmlEscape="false" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">是否纯文件标识（0代表否，1代表是）：</label>
+			<label class="control-label">是否文件：</label>
 			<div class="controls">
 				<form:input path="isFile" htmlEscape="false" maxlength="1" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">公告日期：</label>
-			<div class="controls">
-				<form:input path="noticeDate" htmlEscape="false" maxlength="10" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">公告时间：</label>
-			<div class="controls">
-				<form:input path="noticeTime" htmlEscape="false" maxlength="10" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -76,7 +64,7 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">remarks：</label>
+			<label class="control-label">备注：</label>
 			<div class="controls">
 				<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255" class="input-xxlarge "/>
 			</div>

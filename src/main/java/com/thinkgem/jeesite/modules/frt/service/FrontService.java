@@ -1,5 +1,6 @@
 package com.thinkgem.jeesite.modules.frt.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +38,29 @@ public class FrontService extends BaseService {
 	public Map<String, Object> queryNetValue(Page<Map<String, Object>> page, QueryMap queryMap) {
 		queryMap.setPage(page);
 		page.setList(dao.queryNetValue(queryMap));
-		Map<String, Object> layerMap = Maps.newHashMap();
-		layerMap.put("code", 0);
-		layerMap.put("msg", "");
-		layerMap.put("count", page.getCount());
-		layerMap.put("data", page.getList());
-		return layerMap;
+		Map<String, Object> tempMap = Maps.newHashMap();
+		tempMap.put("code", 0);		// 成功为0
+		tempMap.put("msg", "");
+		tempMap.put("count", page.getCount());
+		tempMap.put("data", page.getList());
+		return tempMap;
+	}
+
+	/**
+	 * 基金信息披露
+	 * @param page
+	 * @param queryMap
+	 * @return
+	 */
+	public Map<String, Object> queryFundInfoOpen(Page<Map<String, Object>> page, QueryMap queryMap) {
+		queryMap.setPage(page);
+		page.setList(dao.queryFundInfoOpen(queryMap));
+		Map<String, Object> tempMap = Maps.newHashMap();
+		tempMap.put("code", 0);		// 成功为0
+		tempMap.put("msg", "");
+		tempMap.put("count", page.getCount());
+		tempMap.put("data", page.getList());
+		return tempMap;
 	}
 
 	

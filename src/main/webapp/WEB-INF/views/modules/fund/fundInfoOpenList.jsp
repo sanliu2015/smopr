@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
+<%@ taglib prefix="fnyn" uri="/WEB-INF/tlds/fnyn.tld" %>
 <html>
 <head>
 	<title>基金信息披露管理</title>
@@ -32,7 +33,10 @@
 				<form:input path="noticeTitle" htmlEscape="false" maxlength="500" class="input-medium"/>
 			</li>
 			<li><label>公告类型：</label>
-				<form:input path="noticeType" htmlEscape="false" maxlength="10" class="input-medium"/>
+				<form:select path="noticeType" class="input-medium">
+					<form:option value="" label=""/>
+					<form:options items="${fnyn:getDictList('noticeType')}" itemLabel="name" itemValue="code" htmlEscape="false"/>
+				</form:select>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
@@ -44,12 +48,9 @@
 			<tr>
 				<th>基金代码</th>
 				<th>公告标题</th>
-				<th>公告日期</th>
 				<th>公告类型</th>
-				<th>create_by</th>
-				<th>create_date</th>
-				<th>update_date</th>
-				<th>remarks</th>
+				<th>创建日期</th>
+				<th>备注</th>
 				<shiro:hasPermission name="fund:fundInfoOpen:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -63,19 +64,10 @@
 					${fundInfoOpen.noticeTitle}
 				</td>
 				<td>
-					${fundInfoOpen.noticeDate}
-				</td>
-				<td>
-					${fundInfoOpen.noticeType}
-				</td>
-				<td>
-					${fundInfoOpen.createBy.id}
+					${fnyn:getDictLabel(fundInfoOpen.noticeType, 'noticeType', '')}
 				</td>
 				<td>
 					<fmt:formatDate value="${fundInfoOpen.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</td>
-				<td>
-					<fmt:formatDate value="${fundInfoOpen.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
 					${fundInfoOpen.remarks}

@@ -36,9 +36,20 @@
 		<if test="dataDatee != null and dataDatee != ''">
 			AND a.data_date &lt;= TO_DATE(#{dataDatee},'yyyy-MM-dd')
 		</if>
-		
-		
 		ORDER BY a.data_date desc
+	</select> 
+	
+	
+	<select id="queryFundInfoOpen" resultType="java.util.Map">
+		select id as "id",notice_title as "noticeTitle", 
+			to_char(create_date,'yyyy-MM-dd') as "noticeDate",
+			case when is_file='1' then file_path else '/a/frt/fundInfoOpen/view?id=' || id end as "linkUrl"
+		from fund_info_open 
+		where fund_code=#{fundCode} 
+		<if test="noticeType != null and noticeType != ''">
+			AND NOTICE_TYPE = #{noticeType} 
+		</if>
+		ORDER BY create_date desc 
 	</select> 
 	
 </mapper>

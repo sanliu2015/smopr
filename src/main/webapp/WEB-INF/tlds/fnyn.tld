@@ -15,7 +15,7 @@
   <function>
     <description>获取字典标签</description>
     <name>getDictLabel</name>
-    <function-class>com.thinkgem.jeesite.modules.smmb.utils.FundParamDictUtils</function-class>
+    <function-class>com.thinkgem.jeesite.modules.fund.utils.FundParamDictUtils</function-class>
     <function-signature>java.lang.String getDictLabel(java.lang.String, java.lang.String, java.lang.String)</function-signature>
     <example>${fnyn:getDictLabel(value, type, defaultValue)}</example>  
   </function>
@@ -23,7 +23,7 @@
   <function>
     <description>获取字典标签(多个)</description>
     <name>getDictLabels</name>
-    <function-class>com.thinkgem.jeesite.modules.smmb.utils.FundParamDictUtils</function-class>
+    <function-class>com.thinkgem.jeesite.modules.fund.utils.FundParamDictUtils</function-class>
     <function-signature>java.lang.String getDictLabels(java.lang.String, java.lang.String, java.lang.String)</function-signature>
     <example>${fnyn:getDictLabels(values, type, defaultValue)}</example>  
   </function>
@@ -31,7 +31,7 @@
   <function>
     <description>获取字典值</description>
     <name>getDictValue</name>
-    <function-class>com.thinkgem.jeesite.modules.smmb.utils.FundParamDictUtils</function-class>
+    <function-class>com.thinkgem.jeesite.modules.fund.utils.FundParamDictUtils</function-class>
     <function-signature>java.lang.String getDictValue(java.lang.String, java.lang.String, java.lang.String)</function-signature>
     <example>${fnyn:getDictValue(label, type, defaultValue)}</example>  
   </function>
@@ -39,7 +39,7 @@
   <function>
     <description>获取字典对象列表</description>
     <name>getDictList</name>
-    <function-class>com.thinkgem.jeesite.modules.smmb.utils.FundParamDictUtils</function-class>
+    <function-class>com.thinkgem.jeesite.modules.fund.utils.FundParamDictUtils</function-class>
     <function-signature>java.util.List getDictList(java.lang.String)</function-signature>
     <example>${fnyn:getDictList(type)}</example>  
   </function>
@@ -47,7 +47,7 @@
   <function>
     <description>获取字典对象列表排序</description>
     <name>getDictListByOrder</name>
-    <function-class>com.thinkgem.jeesite.modules.smmb.utils.FundParamDictUtils</function-class>
+    <function-class>com.thinkgem.jeesite.modules.fund.utils.FundParamDictUtils</function-class>
     <function-signature>java.util.List getDictListByOrder(java.lang.String, java.lang.String)</function-signature>
     <example>${fnyn:getDictListByOrder(type,intOrder)}</example>  
   </function>
@@ -55,7 +55,7 @@
   <function>
     <description>获取字典对象列表</description>
     <name>getDictListJson</name>
-    <function-class>com.thinkgem.jeesite.modules.smmb.utils.FundParamDictUtils</function-class>
+    <function-class>com.thinkgem.jeesite.modules.fund.utils.FundParamDictUtils</function-class>
     <function-signature>java.lang.String getDictListJson(java.lang.String)</function-signature>
     <example>${fnyn:getDictListJson(type)}</example>  
   </function>

@@ -31,8 +31,20 @@ public class FrontController extends BaseController {
 		QueryMap queryMap = new QueryMap();
 		queryMap.putAll(params);
 		queryMap.put("fundCode", UserUtils.getUser().getFundCode());
-		Map<String, Object> layuiTableMap = frontService.queryNetValue(new Page<Map<String, Object>>(request, response), queryMap);
+		Map<String, Object> layuiTableMap = frontService.queryNetValue(new Page<Map<String, Object>>(queryMap.get("pageNo"), queryMap.get("pageSize")), queryMap);
 		return JsonMapper.toJsonString(layuiTableMap);
 	}
+	
+	@RequestMapping(value = {"/fundInfoOpen/list"})
+	@ResponseBody
+	public String queryFundInfoOpen(@RequestParam(required = false) Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
+		QueryMap queryMap = new QueryMap();
+		queryMap.putAll(params);
+		queryMap.put("fundCode", UserUtils.getUser().getFundCode());
+		Map<String, Object> pageData = frontService.queryFundInfoOpen(new Page<Map<String, Object>>(queryMap.get("pageNo"), queryMap.get("pageSize")), queryMap);
+		return JsonMapper.toJsonString(pageData);
+	}
+	
+	
 	
 }

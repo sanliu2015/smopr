@@ -121,6 +121,10 @@ public class Page<T> {
 		this(pageNo, pageSize, 0);
 	}
 	
+	public Page(Object pageNo, Object pageSize) {
+		this(Integer.parseInt(pageNo.toString()), Integer.parseInt(pageSize.toString()), 0);
+	}
+	
 	/**
 	 * 构造方法
 	 * @param pageNo 当前页码
