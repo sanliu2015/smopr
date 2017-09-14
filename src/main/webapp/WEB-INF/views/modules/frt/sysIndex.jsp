@@ -87,7 +87,7 @@
 		    <li>净值表现</li>
 		    <li>信息披露</li>
 		  </ul>
-		  <div class="layui-tab-content" style="height: 100px;">
+		  <div class="layui-tab-content">
 		    <div class="layui-tab-item layui-show">
 		    	<table class="layui-table">
 		    		 <colgroup>
@@ -166,7 +166,7 @@
 						</c:if>
 					</tbody>
 				</table>
-				<div id="noticePage" style="text-align:center"></div>		
+				<div id="noticePage" style="text-align:center;margin-bottom:20px;"></div>		
 		    </div>
 		  </div>
 		</div> 
@@ -255,6 +255,8 @@ layui.use(['element','table','laypage','laydate'], function(){
   
   	element.on('tab(tabBrief)', function(data){
 	    if (this.innerHTML == "净值表现") {
+	    	$("#dataDates").val("");
+	    	$("#dataDatee").val("");
 	    	tableIns.reload({
 	    		url:'${ctx}/frt/netInfo/list',
 	    		where: {

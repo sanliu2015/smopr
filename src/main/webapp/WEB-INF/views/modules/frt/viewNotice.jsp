@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
+<%@ taglib prefix="fnyn" uri="/WEB-INF/tlds/fnyn.tld" %>
 <html>
 <head>
-	<title>信息披露</title>
+	<title>${fnyn:getDictLabel(notice.noticeType,'noticeType','信息披露')}</title>
 	<style type="text/css">
 		/* 动态详细页 */
 		.zixun_bg{background: #fff;border: 1px solid #c7c7c7;}
@@ -34,7 +35,6 @@
 			<div class="detail" id="detailSize">
 				${notice.noticeContent}
 			</div>
-			<!-- 彭禄泉 -->
 			<%-- 
 			<div class="share">
 				<p class="fr">
